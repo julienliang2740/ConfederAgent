@@ -1,0 +1,5 @@
+colorama
+openai>=1.63.2
+json5
+regex
+pydantic
