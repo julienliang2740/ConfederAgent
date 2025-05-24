@@ -11,6 +11,10 @@
         "": ""
     },
 
+    "party_seats_map": {
+        "": 0
+    },
+
     "trigger": "insert trigger event here",
 
     "": {

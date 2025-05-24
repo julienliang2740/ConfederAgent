@@ -7,6 +7,7 @@ Each action is a key, value pair in the actions_list dict:
         "Input Content": "[Natural text description of what the input for the action is, ex. contents of a bill, a message to send to another party]",
         "Input Specification": "[The specific format specification of how the input should be, ex. dictionary with key and value both as str, list of strings]",
         "Action Description": "[Description of the action and what it does]",
+        "Example": "[Full written out example usage]"
         "Has Target": "[Whether the action has a target]"
         "Require Response": [Whether a response is required],
         "Is Public": "[Whether the action is public]",
@@ -24,6 +25,7 @@ action_list = {
         ),
         "Input Specification": "A string for the title of the bill, and a string for the contents of the bill",
         "Action Description": "Drafts and formally introduces a new legislative proposal for debate and vote in parliament.",
+        "Example": "",
         "Has Target": False,
         "Require Response": False,
         "Is Public": True,
@@ -35,8 +37,8 @@ action_list = {
             "list the main reasons, and outline the intended consequence if it passes."
         ),
         "Input Specification": "A string for the contents of the motion of no confidence",
-        "Action Description": "Tables a formal no-confidence motion against the sitting government, "
-                              "triggering debate and a potential confidence vote.",
+        "Action Description": "Tables a formal no-confidence motion against the sitting government, triggering debate and a potential confidence vote.",
+        "Example": "",
         "Has Target": False,
         "Require Response": False,
         "Is Public": True,
@@ -47,8 +49,9 @@ action_list = {
             "Specify the recipient (party or member) and then the body of your private message: "
             "state your intent, arguments, or requests clearly."
         ),
-        "Input Specification": "A string for the target recipient, and a string for the message contents",
+        "Input Specification": "A string for the target recipient, and a string for the message contents. For the target recipient, enter the name EXACTLY THE SAME AS IT IS SPECIFIED (do not add any descriptors or change the spelling in any way)",
         "Action Description": "Sends a confidential communication to another party or member to negotiate or share information.",
+        "Example": "",
         "Has Target": True,
         "Require Response": False,
         "Is Public": False,
@@ -61,6 +64,7 @@ action_list = {
         ),
         "Input Specification": "A string containing the full statement text",
         "Action Description": "Issues an official public statement announcing party positions or responding to current events.",
+        "Example": "",
         "Has Target": False,
         "Require Response": False,
         "Is Public": True,

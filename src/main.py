@@ -1,5 +1,6 @@
 from utils.logging import *
-from building_blocks.board import game_state, round_state
+from building_blocks.board import Board, game_state, round_state
+from building_blocks.agent import *
 
 import argparse
 import json
@@ -51,5 +52,10 @@ if __name__ == '__main__':
     # log trigger event
     logger.log('Trigger: {}\n\n'.format(trigger))
 
+    ##### Initialize Board and Agents #####
+    Simulation = Board(scenario_data)
+    Simulation.initialize_party_agents()
 
-    
+    ##### Start Running the Simulation #####
+
+    # TODO

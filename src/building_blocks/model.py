@@ -39,6 +39,15 @@ Output format:
 }
 """
 
+def generate_action(prompt, model, round_type):
+    actions = {}
+    if round_type == "voting":
+        actions = run_gpt("", prompt, VotingAction, 0, model)
+    else:
+        actions = run_gpt("", user_prompt, ActionsAndThoughtProcess, 0, model)
+    return actions
+
+
 def run_gpt(system_prompt, user_prompt, response_format, temperature: float = 0, model="gpt-4o-mini"):
     open_ai_key = os.environ["OPENAI_API_KEY"]
     client = OpenAI(api_key=open_ai_key)

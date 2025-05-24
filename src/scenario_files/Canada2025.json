@@ -1,0 +1,83 @@
+{
+    "agents_list": [
+        "Party L",
+        "Party C",
+        "Party Q",
+        "Party N",
+        "Party G"
+    ],
+
+    "parties_list": [
+        "Liberal Party",
+        "Conservative Party",
+        "Bloc Quebecois",
+        "NDP",
+        "Green Party"
+    ],
+
+    "party_name_map": {
+        "Party L": "Liberal Party",
+        "Party C": "Conservative Party",
+        "Party Q": "Bloc Quebecois",
+        "Party N": "NDP",
+        "Party G": "Green Party"
+    },
+
+    "party_seats_map": {
+        "Party L": 169,
+        "Party C": 144,
+        "Party Q": 22,
+        "Party N": 7,
+        "Party G": 1
+    },
+
+    "trigger": "Today is a sunny day, nothign happened.",
+
+    "country_info": "As of early 2025, the nation has a population of approximately 41.5 million, with growth primarily driven by immigration. The country operates as a constitutional monarchy and parliamentary democracy, featuring a bicameral legislature and a federal structure comprising ten provinces and three territories. In the political arena, a leadership transition occurred in early 2025, leading to the formation of a minority government. The monarch delivered a speech from the throne, emphasizing national sovereignty and distinct identity. Economically, the nation experienced a 0.4% GDP expansion in the first quarter, but faces challenges due to trade uncertainties and sectoral contractions. Inflation decreased to 1.7% in April 2025, influenced by a significant drop in energy prices following the removal of a federal consumer carbon tax. Immigration policies have been adjusted, with permanent resident admissions targeted at 395,000 in 2025, down from previous projections. Stricter visa requirements have led to a notable decrease in study permits issued to international students. In the energy sector, the government has committed to accelerating the permitting process for major projects, aiming to balance economic growth with environmental considerations.",
+
+    "Party L": {
+        "leadership": "Led by a recently appointed figure with a background in financial governance, who assumed leadership shortly before the 2025 election.",
+        "ideology": "Centrist with a blend of progressive social policies and moderate economic reforms, emphasizing fiscal responsibility and pragmatic governance.",
+        "metrics": "Secured 169 seats in the 343-member House of Commons, capturing 43.8% of the popular vote, thereby forming a minority government.",
+        "history": "A longstanding political entity with a history of alternating between governing and opposition roles, known for its adaptability and centrist policies.",
+        "public_support": "Gained increased support in urban and suburban areas, particularly in central provinces, while maintaining a stable base in other regions.",
+        "tactics_and_strategy": "Focused on economic stability, national unity, and responding to international trade challenges, appealing to a broad electorate seeking moderate leadership.",
+        "demographic_and_regional_bases": "Strong support among urban professionals, middle-class voters, and multicultural communities across various provinces."
+    },
+    "Party C": {
+        "leadership": "Headed by a long-serving parliamentarian known for a populist approach and emphasis on national sovereignty and economic freedom.",
+        "ideology": "Right-leaning, advocating for reduced government intervention, lower taxes, and traditional values, with a strong emphasis on individual liberties.",
+        "metrics": "Won 144 seats, accounting for 41.3% of the popular vote, marking a significant gain from the previous election.",
+        "history": "Formed through the unification of conservative factions, with a history of advocating for free-market policies and national unity.",
+        "public_support": "Expanded its base in rural and suburban regions, particularly in western provinces and parts of central Canada.",
+        "tactics_and_strategy": "Capitalized on economic concerns and nationalistic sentiments, proposing policies aimed at reducing government spending and enhancing personal freedoms.",
+        "demographic_and_regional_bases": "Appeals to rural voters, small business owners, and individuals favoring traditional economic policies, with strongholds in western provinces."
+    },
+    "Party Q": {
+        "leadership": "Led by a figure with a longstanding commitment to regional autonomy and cultural preservation, focusing exclusively on provincial interests.",
+        "ideology": "Center-left, emphasizing regional nationalism, cultural identity, and social democratic principles within its province.",
+        "metrics": "Secured 22 seats, a decrease from the previous election, with 6.3% of the national vote, reflecting a decline in regional support.",
+        "history": "Established in the early 1990s to advocate for provincial sovereignty and cultural preservation, maintaining a presence solely within its province.",
+        "public_support": "Experienced a reduction in support due to shifting political dynamics and increased competition from federal parties within the province.",
+        "tactics_and_strategy": "Focused on defending provincial interests and promoting cultural identity, while adapting to the changing political landscape.",
+        "demographic_and_regional_bases": "Primarily supported by voters within the province who prioritize cultural preservation and regional autonomy."
+    },
+    "Party N": {
+        "leadership": "Previously led by a charismatic figure advocating for social justice and equity, who stepped down following the 2025 electoral setback.",
+        "ideology": "Left-wing, promoting social democracy, wealth redistribution, and comprehensive public services.",
+        "metrics": "Obtained 7 seats with 6.3% of the popular vote, marking the party's poorest performance in its history.",
+        "history": "Originated from labor movements and cooperative organizations, traditionally serving as a voice for working-class interests and social equity.",
+        "public_support": "Faced a significant decline in support, losing ground to both centrist and conservative parties across various regions.",
+        "tactics_and_strategy": "Advocated for expanded social programs and progressive taxation, but struggled to maintain relevance amid changing political priorities.",
+        "demographic_and_regional_bases": "Historically supported by labor unions, progressive urban voters, and advocates for social justice, with diminishing influence in recent elections."
+    },
+    "Party G": {
+        "leadership": "Co-led by environmental advocates, with one leader resigning post-election due to the party's underwhelming performance.",
+        "ideology": "Environmentalism, emphasizing sustainability, climate action, and grassroots democracy.",
+        "metrics": "Secured a single seat and 1.2% of the popular vote, reflecting a decline from previous electoral outcomes.",
+        "history": "Founded to prioritize environmental issues within the political discourse, often influencing policy through advocacy rather than legislative power.",
+        "public_support": "Maintained a niche support base concerned with ecological issues, but struggled to expand its appeal amid broader political debates.",
+        "tactics_and_strategy": "Focused on climate change and environmental policies, advocating for systemic change through legislative and grassroots efforts.",
+        "demographic_and_regional_bases": "Attracts environmentally conscious voters, particularly in regions with strong ecological movements and progressive communities."
+    }
+}
