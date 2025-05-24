@@ -1,4 +1,25 @@
 {
-    "test": "monke bruga",
-    "trigger": "monke trigger monke"
+    "agents_list": [
+        ""
+    ],
+
+    "parties_list": [
+        ""
+    ],
+
+    "party_name_map": {
+        "": ""
+    },
+
+    "trigger": "insert trigger event here",
+
+    "": {
+        "leadership": "",
+        "ideology": "",
+        "metrics": "",
+        "history": "",
+        "public_support": "",
+        "tactics_and_strategy": "",
+        "demographic_and_regional_bases": ""
+    }
 }
