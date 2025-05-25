@@ -14,8 +14,12 @@
     "party_seats_map": {
         "": 0
     },
+    
+    "ruling_party": "",
 
     "trigger": "insert trigger event here",
+
+    "country_info": "",
 
     "": {
         "leadership": "",

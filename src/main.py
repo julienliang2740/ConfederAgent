@@ -53,9 +53,8 @@ if __name__ == '__main__':
     logger.log('Trigger: {}\n\n'.format(trigger))
 
     ##### Initialize Board and Agents #####
-    Simulation = Board(scenario_data)
+    Simulation = Board(scenario_data, logger)
     Simulation.initialize_party_agents()
 
     ##### Start Running the Simulation #####
-
-    # TODO
+    Simulation.run(10,3)
