@@ -1,5 +1,5 @@
-# from building_blocks.actions import *
-from actions import *
+from building_blocks.actions import *
+from building_blocks.prompt import *
 
 from openai import OpenAI
 
@@ -42,9 +42,12 @@ Output format:
 def generate_action(prompt, model, round_type):
     actions = {}
     if round_type == "voting":
-        actions = run_gpt("", prompt, VotingAction, 0, model)
+        actions = run_gpt(voting_round_format_prompt, prompt, VotingAction, 0, model)
     else:
-        actions = run_gpt("", user_prompt, ActionsAndThoughtProcess, 0, model)
+        actions = run_gpt(regular_round_format_prompt, prompt, ActionsAndThoughtProcess, 0, model)
+
+    # print(prompt)
+    # print(actions)
     return actions
 
 

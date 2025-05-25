@@ -96,7 +96,7 @@ All the agents each round do their stuff within the board class
 """
 
 class Board:
-    def __init__(self, scenario_data, logger):
+    def __init__(self, scenario_data, logger, model):
         # Game and Round State (these change as the simulation goes on)
         self.game_state = game_state
         self.round_state = round_state
@@ -114,8 +114,10 @@ class Board:
         # Party agents, these are initialized in initialize_party_agents() fills the line below
         self.party_agents = []
 
-        # Secrtary agent (this is static)
+        # Other things
         self.secretary_agent = SecertaryAgent()
+        self.logger = logger
+        self.model = model
 
     # int - total_rounds: total number of rounds to run
     # int - voting_round_interval: number of rounds to run before doing a voting round
@@ -124,21 +126,33 @@ class Board:
         regular_rounds_since_vote = 0
 
         while round_number <= total_rounds:
-            print(f"MONKE BRUGA ROUND {round_number}")
             self.run_round(round_number)
             round_number += 1
             regular_rounds_since_vote += 1
 
             if regular_rounds_since_vote == voting_round_interval:
-                print("MONKE BRUGA VOTING ROUND")
                 self.run_voting_round(self.game_state["Proposed Bills"])
                 regular_rounds_since_vote = 0
 
     def run_round(self, round_number):
-        pass
+        print(f"MONKE BRUGA ROUND {round_number}")
+
+        # dictof(str:listof(actions)) - turn_record: each key is a party name, the corresponding value is their list of actions
+        turn_record = {}
+        
+        for party_agent in self.party_agents:
+            party_agent_actions = party_agent.generate_actions(self.game_state, round_number, self.scenario_data["trigger"])
+
+            print(f"MONKE BRUGA ACTION OUTPUT {party_agent}:")
+            print(party_agent_actions)
+        
+        exit()
+        
+        print(self.party_agents)
 
     def run_voting_round(self, bills):
-        pass
+        print("MONKE BRUGA VOTING ROUND")
+
 
     def update_game_state(self, current_round_state):
         pass
@@ -186,8 +200,6 @@ Demographic and Regional Bases: {party_info["demographic_and_regional_bases"]}
             party_seats = f"{party}: {self.scenario_data["party_seats_map"][party]}\n"
             seat_distribution_prompt += party_seats
 
-
-
         common_information_prompt = f"""
 ##### Simulation Overall Setting
 {simulation_setting_prompt}
@@ -202,7 +214,6 @@ Demographic and Regional Bases: {party_info["demographic_and_regional_bases"]}
 {seat_distribution_prompt}
 The ruling party is {self.scenario_data["ruling_party"]}.
 """
-        print(common_information_prompt)
 
         # 2) initialize each agent with its own agent-specific data/prompts
         for party in scenario_agents_list:
@@ -217,6 +228,7 @@ Play according to your own settings for {party}.
             full_profile_prompt = common_information_prompt + party_assignment_prompt
             Party_Agent = Agent(
                 identity=party,
-                profile=full_profile_prompt
+                profile=full_profile_prompt,
+                model=self.model
             )
             self.party_agents.append(Party_Agent)
