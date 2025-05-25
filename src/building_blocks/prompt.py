@@ -111,6 +111,8 @@ Step 5: Choose the Most Strategic Action
 
 Make sure your action follows all formatting and input requirements for the simulation.
 Justify your action internally with a brief rationale: Why this, and why now?
+
+(Note: YOU CAN AND PROBABLY SHOULD PERFORM MULTIPLE ACTIONS EACH ROUND)
 """
 
 voting_thought_process_prompt = f"""

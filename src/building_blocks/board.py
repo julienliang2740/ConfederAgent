@@ -90,6 +90,7 @@ round_state = {""
 
 
 
+
 """
 The board class encapsulates the whole simulation
 All the agents each round do their stuff within the board class
@@ -143,8 +144,8 @@ class Board:
         for party_agent in self.party_agents:
             party_agent_actions = party_agent.generate_actions(self.game_state, round_number, self.scenario_data["trigger"])
 
-            print(f"MONKE BRUGA ACTION OUTPUT {party_agent}:")
-            print(party_agent_actions)
+            print(f"MONKE BRUGA {party_agent}:")
+            print(party_agent_actions['actions'])
         
         exit()
         
