@@ -13,7 +13,7 @@ def create_parser():
     parser.add_argument('--trigger', type=str, default="", help='triggering event')
     parser.add_argument('--rounds', type=int, default=10, help='number of rounds')
     parser.add_argument('--model', type=str, default='gpt-4o-mini', help='choose the model name')
-    parser.add_argument('--scenario', type=str, default='example', help='CHANGE LATER CHANGE LATER CHANGE LATER CHANGE LATER')
+    parser.add_argument('--scenario', type=str, default='example', help='file name of the scenario file to run')
     parser.add_argument('--type_speed', type=int, default=500, help='typing speed for thought process')
     parser.add_argument('--present_thought_process', action='store_true', help='whether to print thought process')
     return parser
