@@ -113,6 +113,8 @@ Make sure your action follows all formatting and input requirements for the simu
 Justify your action internally with a brief rationale: Why this, and why now?
 
 (Note: YOU CAN AND PROBABLY SHOULD PERFORM MULTIPLE ACTIONS EACH ROUND)
+YOU MUST SEND MESSAGES TO OTHER PARTIES EVERY TURN
+IF YOU HAVE ALREADY PROPOSED A BILL IN RECENT TURNS DO NOT PROPOSE A SIMILIAR ONE, THINGS WILL GET REPETITIVE
 """
 
 voting_thought_process_prompt = f"""

@@ -1,0 +1,34 @@
+Prompt structure - normal round:
+---- from Agent class self.profile ----
+v simulation setting
+v country info
+v parties info
+v party assignment for agent
+
+---- made in Agent class generate_actions() ----
+- current situation (trigger + other things that have happened) + round number info -> ELABORATE DOWN BELOW
+
+---- from prompt.py ----
+v actions list
+v thought process prompting
+- miscallaneous notes
+
+Prompt structure - voting round:
+- simulation setting
+- country info
+- parties info
+- party assignment for agent
+- current situation (trigger + other things that have happened) + round number info
+- EXPLAINING THAT IT'S A VOTING ROUND
+- voting action explanation
+- thought process prompting
+- miscallaenous notes
+
+
+
+
+CURRENT SITUATION:
+- trigger
+- what happened each day (public statements, proposed bills, voting results)
+- message logs (1/other party)
+- current situation -> what bills have passed

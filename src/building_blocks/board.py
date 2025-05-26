@@ -4,7 +4,7 @@ from building_blocks.secretary import *
 from building_blocks.prompt import *
 
 """
-(note: in general feed the game state as a parameter to other functions, dont call it directly)
+(note: this is a little outdated :skull:, sample of newer version in a diff file)
 
 The game state contains the overall state of the game and all the relevant information that is to be preserved across rounds
 
@@ -44,51 +44,41 @@ Other things to add (once those features are implemented):
 - election info
 """
 
+"""
+current game_state format
+key -> str, val -> list
+
+game_state["History"] -> {ROUND_NUMBER: {PARTY_NAME: [action1, action2, ...], ...}, ...}
+game_state["Proposed Bills"] -> [{"proposer": PARTY_NAME, "title": "...", "content": "..."}, ...]
+game_state["Passed Bills"] -> [{"proposer": PARTY_NAME, "title": "...", "content": "..."}, ...]
+game_state["No Confidence in Motion"] -> bool for whether no confidence has been brought up
+
+VERY IMPORTANT THAT ROUND NUMBER IS STORED AS FLOAT -> ROUND.5 IS FOR VOTING ROUND (ex. 3 and 3.5)
+^GAME HISTORY FOR VOTING ROUNDS WILL HAVE DIFF FORMAT
+"""
+
 game_state = {
-    "Trigger Event": "",
-    "History": [],
-    "Parties": {},
+    "History": {},
     "Proposed Bills": [],
     "Passed Bills": [],
-    "Private Message Record": {}
-
+    "No Confidence in Motion": False
 }
 
-
-
 """
-The round state contains everything that has happened in the past round, this information is processed at the end of each round, generally this means that:
-- messages are processed into "Private Message Record" in game_state
-- bills and non-confidence motions are put into "Proposed Bills" in game_state
+chat_history contains all the private messages
+self_is_sender -> is the party that is the big key the one sending it
 
-Round State items:
-1) Private Message Record
-- format: dictof(str:listof(dictof(str:str)))
-^ {"[party name]": [{"[sender]": "content"}, ...], ...}
-- content: Private Messages that are specific to each Party Agent
-
-3) Public Statement Record
-- format: dictof(str: listof(str), ...)
-^ {"[party name]": ["[statement]", ...], ...}
-- content: Public Statements made this round
-
-2) Proposed Bills
-- format: listof(dictof(str:str, str:str, str:str))
-^ [{"Author": "...", "Bill Name": "...", "Bill Contents": "..."}]
-- content: Bills that have been proposed and are currently up in the air, to be voted upon
-
-Other things to add (once those features are implemented):
-- outgoing coalition requests
-- who is in a coalition with who
-- election info
-"""
-round_state = {""
-    "Private Message Record": {},
-    "Public Statement Record": {},
-    "Proposed Bills": []
+format example:
+{
+    "Party A": {
+        "Party B": [{"round_number": ROUND_NUMBER_FLOAT, "self_is_sender": BOOL, "content", "..."}, ...],
+        "Party C": [^same as above]
+    },
+    ^repeat for Party B and Party C
 }
 
-
+"""
+chat_history = {}
 
 
 """
@@ -97,10 +87,17 @@ All the agents each round do their stuff within the board class
 """
 
 class Board:
-    def __init__(self, scenario_data, logger, model):
+    def __init__(self, scenario_data, logger, model, present_thought_process):
+        agents_list = scenario_data["agents_list"]
+
         # Game and Round State (these change as the simulation goes on)
         self.game_state = game_state
-        self.round_state = round_state
+        self.chat_history = {}
+        for agent_name in agents_list:
+            self.chat_history[agent_name] = {}
+            for other_agent_name in agents_list:
+                if other_agent_name != agent_name:
+                    self.chat_history[agent_name][other_agent_name] = []
 
         # Action info (these are static)
         self.action_list = action_list
@@ -109,7 +106,7 @@ class Board:
 
         # Scenario data (extracted from json, with all the parties and their info)
         self.scenario_data = scenario_data
-        self.num_parties = len(scenario_data["agents_list"])
+        self.num_parties = len(agents_list)
         self.total_seats = sum(scenario_data["party_seats_map"].values())
 
         # Party agents, these are initialized in initialize_party_agents() fills the line below
@@ -119,6 +116,7 @@ class Board:
         self.secretary_agent = SecertaryAgent()
         self.logger = logger
         self.model = model
+        self.present_thought_process = present_thought_process
 
     # int - total_rounds: total number of rounds to run
     # int - voting_round_interval: number of rounds to run before doing a voting round
@@ -127,7 +125,16 @@ class Board:
         regular_rounds_since_vote = 0
 
         while round_number <= total_rounds:
-            self.run_round(round_number)
+            turn_record, though_process_record = self.run_round(round_number)
+            self.update_chat_history(turn_record, round_number)
+            self.update_game_state(turn_record, round_number)
+            print("="*100)
+            print(self.chat_history)
+            print("="*100)
+            print(self.game_state)
+            print("="*100)
+            exit()
+            
             round_number += 1
             regular_rounds_since_vote += 1
 
@@ -138,29 +145,58 @@ class Board:
     def run_round(self, round_number):
         print(f"MONKE BRUGA ROUND {round_number}")
 
-        # dictof(str:listof(actions)) - turn_record: each key is a party name, the corresponding value is their list of actions
+        # dictof(str:listof(actions), ...) - turn_record: each key is a party name, the corresponding value is their list of actions
         turn_record = {}
+        # dictof(str:str, ...) - thought_process_record: each key is a party name, the value is a str with the thought process
+        thought_process_record = {}
         
         for party_agent in self.party_agents:
             party_agent_actions = party_agent.generate_actions(self.game_state, round_number, self.scenario_data["trigger"])
+            turn_record[party_agent.identity] = party_agent_actions['actions']
+            thought_process_record[party_agent.identity] = party_agent_actions['thought_process']
 
-            print(f"MONKE BRUGA {party_agent}:")
-            print(party_agent_actions['actions'])
-        
-        exit()
-        
-        print(self.party_agents)
+        print("======================================\n" * 5)
+        print(turn_record)
+        print(thought_process_record)
+        return turn_record, thought_process_record
 
     def run_voting_round(self, bills):
         print("MONKE BRUGA VOTING ROUND")
+        self.game_state["No Confidence in Motion"] = False
 
+    def update_chat_history(self, turn_record, round_number):
+        for agent_name in turn_record.keys():
+            for action in turn_record[agent_name]:
+                if action['action_name'] != "Send Message":
+                    continue
+                target_agent_name = action["target"]
+                message_content = action["message_content"]
+                self.chat_history[agent_name][target_agent_name].append({"round_number": round_number, "self_is_sender": True, "content": message_content})
+                self.chat_history[target_agent_name][agent_name].append({"round_number": round_number, "self_is_sender": False, "content": message_content})
 
-    def update_game_state(self, current_round_state):
-        pass
+    # note: the current design makes it so that the first party to ever raise no confidence is the only one who gets their bill put up to vote, may change later
+    def update_game_state(self, turn_record, round_number):
+        # actual processing
+        self.game_state["History"][round_number] = {}
+        for agent_name in turn_record.keys():
+            # initialize empty list
+            self.game_state["History"][round_number][agent_name] = []
+            # go through actions
+            for action in turn_record[agent_name]:
+                action_name = action['action_name']
+                # skip "Send Message" actions -> these are dealt with in update_chat_history
+                if action_name == "Send Message":
+                    continue
 
-    def update_round_state(self, agent_actions_list):
-        for action in agent_actions_list:
-            pass
+                # processing for other actions
+                self.game_state["History"][round_number][agent_name].append(action)
+                if action_name == "Propose Bill":
+                    self.game_state["Proposed Bills"].append({"proposer": agent_name, "title": action["bill_name"], "content": action["bill_content"]})
+                elif action_name == "Motion of No Confidence":
+                    if self.game_state["No Confidence in Motion"] == True: # if a no confidence call is already in motion then skip this one, considered as repeat
+                        continue
+                    self.game_state["Proposed Bills"].append({"proposer": agent_name, "title": "Motion of No Confidence", "content": action["bill_content"]})
+                    self.game_state["No Confidence in Motion"] = True
 
     # Create the Party Agents and the prompts for them (simulation setting, scenario info, which party they are, etc)
     def initialize_party_agents(self):
