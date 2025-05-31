@@ -4,6 +4,7 @@ from building_blocks.secretary import *
 from building_blocks.prompt import *
 
 """
+(updated note: im pretty sure this is basically wrong now, refer to the other comment below this one for game state info)
 (note: this is a little outdated :skull:, sample of newer version in a diff file)
 
 The game state contains the overall state of the game and all the relevant information that is to be preserved across rounds
@@ -128,12 +129,12 @@ class Board:
             turn_record, though_process_record = self.run_round(round_number)
             self.update_chat_history(turn_record, round_number)
             self.update_game_state(turn_record, round_number)
-            print("="*100)
-            print(self.chat_history)
-            print("="*100)
-            print(self.game_state)
-            print("="*100)
-            exit()
+            # print("="*100)
+            # print(self.chat_history)
+            # print("="*100)
+            # print(self.game_state)
+            # print("="*100)
+            # exit()
             
             round_number += 1
             regular_rounds_since_vote += 1
@@ -151,7 +152,7 @@ class Board:
         thought_process_record = {}
         
         for party_agent in self.party_agents:
-            party_agent_actions = party_agent.generate_actions(self.game_state, round_number, self.scenario_data["trigger"])
+            party_agent_actions = party_agent.generate_actions(self.game_state, self.chat_history, round_number, self.scenario_data["trigger"])
             turn_record[party_agent.identity] = party_agent_actions['actions']
             thought_process_record[party_agent.identity] = party_agent_actions['thought_process']
 

@@ -46,8 +46,6 @@ def generate_action(prompt, model, round_type):
     else:
         actions = run_gpt(regular_round_format_prompt, prompt, ActionsAndThoughtProcess, 0, model)
 
-    # print(prompt)
-    # print(actions)
     return actions
 
 
